@@ -1,9 +1,10 @@
 export class User {
-    userId: number;
+    user_id: number;
     name: string;
-    mail:string;
     username:string;
+    mail:string;
     password:string;
+    role:string;
 }
 
-export type UserData = Omit<User, "userId">;
+export type UserData = Omit<User, "user_id">;

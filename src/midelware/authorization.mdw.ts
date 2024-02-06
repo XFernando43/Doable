@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 // import { userService } from "../Services/users.service";
 import { ApiError } from "./error";
-import { User } from "../Domain/models/user.entity";
+import type { User } from "../Domain/models/user.model";
+
 
 // import { userService } from "../Services/users.service";
   

@@ -8,8 +8,8 @@ const jwtSecret = "TUNOMETECRABASARAMBINCHE2014";
 
 export async function registerUser(data: UserData):Promise<User>{
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    const _query = "INSERT INTO users(name,username,password) VALUES($1,$2,$3) RETURNING *"
-    const queryParams = [ data.name,data.username,hashedPassword];
+    const _query = "INSERT INTO users(name,username,password,role) VALUES($1,$2,$3,$4) RETURNING *"
+    const queryParams = [ data.name,data.username,hashedPassword,data.role];
     
     const result = await query(_query,queryParams);
     return result.rows[0];
@@ -58,7 +58,7 @@ export async function deleteUsername(userId:string):Promise<User>{
 export async function Login(data:IUserLoginDto){
     const userFromBb = await getUserByName(data.username);
 
-    console.log("Aqui ",userFromBb);
+    // console.log("Aqui ",userFromBb);
     
     if(userFromBb === undefined){
       return {
@@ -72,11 +72,13 @@ export async function Login(data:IUserLoginDto){
       userFromBb.password
     );
     
-    console.log("usuario de DB: ",userFromBb);
-    console.log("ID ",userFromBb.userId);
+    console.log("-->: ",userFromBb);
+    console.log("-->: ",userFromBb.user_id);
+    console.log("-->: ",userFromBb.role);
     
     const payload = {
-      userId: userFromBb.userId,
+      userId: userFromBb.user_id,
+      userRole: userFromBb.role,
     };
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "50m" });
 

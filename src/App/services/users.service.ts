@@ -42,11 +42,13 @@ class UserService {
     try{
         const username = req.body.username;
         const password = req.body.password;
+        const role = req.body.role;
         const userData: UserData = {
             name: "No ingresado",
             mail:'',
             username: username,
-            password: password
+            password: password,
+            role: role||'user',
         };
         const user = await registerUser(userData);
         return res.status(200).json({
@@ -67,7 +69,7 @@ class UserService {
       const user_id = req.userId;
       
       const userFromDb = await getUserById(user_id);
-      const userId = userFromDb.userId;
+      const userId = userFromDb.user_id;
       
       if(!req.body.email || !req.body.firstName || !req.body.lastName){
           return res.status(200).json({
