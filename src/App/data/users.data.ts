@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 import { query } from "../../db";
 import type { User, UserData } from "../../Domain/models/user.model";
 import type { IUserLoginDto, IUserUpdateDto } from "../../Domain/Interfaces/IUser.interface";
+import "dotenv/config";
+const jwtSecret = process.env["JWTSECRET"];
 
-const jwtSecret = "TUNOMETECRABASARAMBINCHE2014";
+
 
 export async function registerUser(data: UserData):Promise<User>{
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -38,7 +40,7 @@ export async function getAllUsers():Promise<User[]>{
 }
 
 export async function getUserById(id:string):Promise<User>{
-  let _query = `Select* From users where users.id = ${id}`;
+  let _query = `Select* From users where user_id = ${id}`;
   const result = await query(_query);
   return result.rows[0];
 }
@@ -80,7 +82,7 @@ export async function Login(data:IUserLoginDto){
       userId: userFromBb.user_id,
       userRole: userFromBb.role,
     };
-    const token = jwt.sign(payload, jwtSecret, { expiresIn: "50m" });
+    const token = jwt.sign(payload, jwtSecret as string, { expiresIn: "50m" });
 
     if (checkPassword) {
       const data = {

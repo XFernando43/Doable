@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { ApiError } from "./error";
 
-const JWT_SECRET = "TUNOMETECRABASARAMBINCHE2024";
+const JWT_SECRET = process.env["JWTSECRET"];
 
 declare global {
     namespace Express {
@@ -26,7 +26,7 @@ export function authenticateHandler(
   }
  
   try {
-    const payload = jwt.verify(token, JWT_SECRET) as {
+    const payload = jwt.verify(token, JWT_SECRET as string) as {
       userId:string;
       userRole:string;
       iat: number;

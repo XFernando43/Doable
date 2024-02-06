@@ -15,7 +15,7 @@ userRouter.get(
 userRouter.get(
   "/me",
   authenticateHandler,
-//   authorize("admin","user"),
+  //   authorize("admin","user"),
   User_Controller.getMe
   
 );
