@@ -23,12 +23,12 @@ export async function UpdateUsernameById(id:string,data:IUserUpdateDto): Promise
 
   const _query = `
       UPDATE users 
-      SET name = $1, username = $2, password = $3
-      WHERE id = $4
+      SET name = $1, username = $2, password = $3, mail = $4
+      WHERE user_id = $5
       RETURNING *;
   
       `;  
-  const queryParams = [data.name, data.username, hashedPassword, id];
+  const queryParams = [data.name, data.username, hashedPassword, data.mail,id];
   const result = await query(_query, queryParams);
   return result.rows[0];
 }
@@ -52,7 +52,7 @@ export async function getUserByName(username: string): Promise<User> {
 }
 
 export async function deleteUsername(userId:string):Promise<User>{
-  const consult = `Delete from users where id = ${userId} RETURNING *;`;
+  const consult = `Delete from users where user_id = ${userId} RETURNING *;`;
     const result = await query(consult);
     return result.rows[0];
 }

@@ -72,7 +72,7 @@ class UserService {
       const userFromDb = await getUserById(user_id);
       const userId = userFromDb.user_id;
       
-      if(!req.body.email || !req.body.firstName || !req.body.lastName){
+      if(!req.body.mail || !req.body.name || !req.body.username|| !req.body.password){
           return res.status(200).json({
             ok:false,
             me:"Campos faltantes"
@@ -85,6 +85,7 @@ class UserService {
         username:req.body.username,
         password:req.body.password
       }
+
 
       if(Number(userId) === Number(user_id)){
           await UpdateUsernameById(user_id,userData);

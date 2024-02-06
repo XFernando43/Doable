@@ -38,7 +38,6 @@ userRouter.delete(
   "/me",
   authenticateHandler,
   User_Controller.deleteMe
-  
 );
 
 userRouter.post("/SignIn", async (_req, res) => {
