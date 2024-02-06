@@ -1,7 +1,7 @@
 import express from "express";
 import { User_Controller } from "../controllers/user.controller";
 import { authenticateHandler } from "../../midelware/authentication.mdw";
-// import { authorize } from "../../midelware/authorization.mdw";
+import { authorize } from "../../midelware/authorization.mdw";
 export const userRouter = express.Router();
 
 userRouter.get(
@@ -15,7 +15,7 @@ userRouter.get(
 userRouter.get(
   "/me",
   authenticateHandler,
-  //   authorize("admin","user"),
+  authorize("admin","user"),
   User_Controller.getMe
   
 );
