@@ -1,16 +1,8 @@
-import { format } from "date-fns";
+import jwt from 'jsonwebtoken';
 const bcrypt = require("bcrypt");
 import { query } from "../../db";
 import type { User, UserData } from "../../Domain/models/user.model";
 import type { IUserLoginDto, IUserUpdateDto } from "../../Domain/Interfaces/IUser.interface";
-
-
-
-// import jwt from "jsonwebtoken";
-// import { IUserDto } from "../../Domain/Interfaces/UserDto.interface";
-// import { User } from "../../Domain/models/user.entity";
-// import { IUserUpdateDto } from "../../Domain/Interfaces/IUserUpdate.interface";
-
 
 const jwtSecret = "TUNOMETECRABASARAMBINCHE2014";
 
@@ -63,8 +55,6 @@ export async function deleteUsername(userId:string):Promise<User>{
     return result.rows[0];
 }
 
-
-
 export async function Login(data:IUserLoginDto){
     const userFromBb = await getUserByName(data.username);
 
@@ -83,11 +73,10 @@ export async function Login(data:IUserLoginDto){
     );
     
     console.log("usuario de DB: ",userFromBb);
-    console.log("ID ",userFromBb.id);
+    console.log("ID ",userFromBb.userId);
     
     const payload = {
-      userId: userFromBb.id,
-      userRole: userFromBb.role,
+      userId: userFromBb.userId,
     };
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "50m" });
 
