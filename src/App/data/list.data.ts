@@ -1,9 +1,8 @@
-import type { IBoardUpdateDto } from "../../Domain/Interfaces/IBoard.interface";
-import type { IListUpdateDto } from "../../Domain/Interfaces/IList.interface";
-import type { List, ListData } from "../../Domain/models/list.model";
+import type { IListCreateDto, IListUpdateDto } from "../../Domain/Interfaces/IList.interface";
+import type { List } from "../../Domain/models/list.model";
 import { query } from "../../db";
 
-export async function createList(data: ListData):Promise<List>{
+export async function createList(data: IListCreateDto):Promise<List>{
     const _query = "INSERT INTO board(list_name,board_id) VALUES($1,$2) RETURNING *"
     const queryParams = [data.list_name,data.board_id];
     const result = await query(_query,queryParams);

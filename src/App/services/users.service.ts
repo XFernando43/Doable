@@ -22,7 +22,7 @@ class UserService {
   }
 
   async getUserById(req:Request, res:Response): Promise<User|any> {
-    // try{
+    try{
       const userId = req.userId;
       console.log("--> midelware",userId);
       const user = await getUserById(userId);
@@ -30,13 +30,13 @@ class UserService {
           ok:true,
           me:user
       });
-    // }catch(error){
-    //   return res.status(500).json({
-    //       ok: false,
-    //       msg: "Error de Servidor",
-    //       data: error,
-    //   });
-    // }
+    }catch(error){
+      return res.status(500).json({
+          ok: false,
+          msg: "Error de Servidor",
+          data: error,
+      });
+    }
   }
 
   async createUser(req:Request, res:Response) {
