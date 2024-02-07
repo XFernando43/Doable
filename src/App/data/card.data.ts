@@ -22,7 +22,7 @@ export async function deleteCard(id:string):Promise<Card>{
     return result.rows[0];
 }
 
-export async function updateList(data:ICardUpdateDto):Promise<Card>{
+export async function updateCard(data:ICardUpdateDto):Promise<Card>{
   const consult = `
     UPDATE Cards
     SET card_title = $1 
