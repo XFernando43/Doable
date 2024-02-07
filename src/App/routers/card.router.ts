@@ -1,33 +1,34 @@
 import express from "express";
-// import { authenticateHandler } from "../../midelware/authentication.mdw";
+import { authenticateHandler } from "../../midelware/authentication.mdw";
 import { Card_Controller } from "../controllers/card.controller";
+import { authorize } from "../../midelware/authorization.mdw";
 export const cardRouter = express.Router();
 
 cardRouter.get(
     "/getCards/:id",
-    // authenticateHandler,
-    //authorize("admin"),
+    authenticateHandler,
+    authorize("admin","user"),
     Card_Controller.getAllCardsForList
 );
-  
-  
+    
+    
 cardRouter.post(
     "/:id",
-    // authenticateHandler,
-    //schemaValidation(UserSchema),
+    authenticateHandler,
+    authorize("admin","user"),
     Card_Controller.createCard
 );
 
 cardRouter.patch(
     "/:id",
-    //schemaValidation(UpdateUserSchema),
-    // authenticateHandler,
-    //authorize("admin","user"),
+    authenticateHandler,
+    authorize("admin","user"),
     Card_Controller.updateCard
 );
-
+    
 cardRouter.delete(
     "/:id",
-    // authenticateHandler,
+    authenticateHandler,
+    authorize("admin","user"),
     Card_Controller.deleteCard
 );

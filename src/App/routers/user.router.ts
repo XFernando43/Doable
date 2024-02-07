@@ -2,12 +2,14 @@ import express from "express";
 import { User_Controller } from "../controllers/user.controller";
 import { authenticateHandler } from "../../midelware/authentication.mdw";
 import { authorize } from "../../midelware/authorization.mdw";
+import { schemaValidation } from "../Schemas/schema.validation";
+import { UserSchema } from "../Schemas/user.schema";
 export const userRouter = express.Router();
 
 userRouter.get(
   "/getAll",
-  // authenticateHandler,
-  //authorize("admin"),
+  authenticateHandler,
+  authorize("admin"),
   User_Controller.getAllUsers
   
 );
@@ -22,21 +24,21 @@ userRouter.get(
 
 userRouter.post(
   "/signup",
-//   schemaValidation(UserSchema),
+  schemaValidation(UserSchema),
   User_Controller.createUser
 );
 
 userRouter.patch(
   "/me",
-//   schemaValidation(UpdateUserSchema),
   authenticateHandler,
-//   authorize("admin","user"),
+  authorize("admin","user"),
   User_Controller.updateMe
 );
-
+  
 userRouter.delete(
   "/me",
   authenticateHandler,
+  authorize("admin","user"),
   User_Controller.deleteMe
 );
 
