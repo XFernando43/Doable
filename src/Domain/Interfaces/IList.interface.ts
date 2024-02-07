@@ -1,7 +1,7 @@
 export interface IListUpdateDto{
     list_name:string;
     orderList:number;
-    board_id:number
+    list_id:number
 }
 
 export interface IListCreateDto{

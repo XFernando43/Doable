@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import type { List } from "../../Domain/models/list.model";
-import { getAllBoardByUser } from "../data/board.data";
 import type { IListCreateDto, IListUpdateDto } from "../../Domain/Interfaces/IList.interface";
-import { createList, deleteList, updateList } from "../data/list.data";
+import { createList, deleteList, getAllListsByUser, updateList } from "../data/list.data";
 
 class ListService {
   
   async getListsByBoard(req:Request, res:Response): Promise<List[] | any> {
     try{
-      const userId = req.userId;
-      const lists = await getAllBoardByUser(userId);
+      // const userId = req.userId;
+      const boardId = req.params["id"];
+      const lists = await getAllListsByUser(boardId);
       return res.status(200).json({
           ok:true,
           lists:lists
@@ -50,27 +50,31 @@ class ListService {
         const list_name = req.body.list_name;
         const order = req.body.order;
         const board_Id = Number(req.params["id"]); 
-        
-
-        if(!req.body.name || !req.body.color){
-            return res.status(200).json({
-                ok:false,
-                me:"Campos faltantes"
-            });
-        } 
-
+      
         const boardData: IListUpdateDto = {
             list_name:list_name,
             orderList:order,
-            board_id: board_Id,
+            list_id: board_Id,
         };
 
-        await updateList(boardData);
-        return res.status(200).json({
+        console.log(boardData);
+      
+        const result = await updateList(boardData);
+
+        console.log(result);
+
+        if(result){
+          return res.status(200).json({
             ok:true,
             me:boardData
-        });
-      
+          });
+        }else{
+          return res.status(404).json({
+            ok: false,
+            msg: "List no encontrada",
+          });
+        }
+
     }catch(error){
         return {
             ok: false,
