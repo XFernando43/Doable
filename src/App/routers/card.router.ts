@@ -1,11 +1,11 @@
 import express from "express";
-import { authenticateHandler } from "../../midelware/authentication.mdw";
+// import { authenticateHandler } from "../../midelware/authentication.mdw";
 import { Card_Controller } from "../controllers/card.controller";
 export const cardRouter = express.Router();
 
 cardRouter.get(
     "/getCards/:id",
-    authenticateHandler,
+    // authenticateHandler,
     //authorize("admin"),
     Card_Controller.getAllCardsForList
 );
@@ -13,7 +13,7 @@ cardRouter.get(
   
 cardRouter.post(
     "/:id",
-    authenticateHandler,
+    // authenticateHandler,
     //schemaValidation(UserSchema),
     Card_Controller.createCard
 );
@@ -21,13 +21,13 @@ cardRouter.post(
 cardRouter.patch(
     "/:id",
     //schemaValidation(UpdateUserSchema),
-    authenticateHandler,
+    // authenticateHandler,
     //authorize("admin","user"),
     Card_Controller.updateCard
 );
 
 cardRouter.delete(
     "/:id",
-    authenticateHandler,
+    // authenticateHandler,
     Card_Controller.deleteCard
 );

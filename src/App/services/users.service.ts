@@ -4,7 +4,6 @@ import { Login, UpdateUsernameById, deleteUsername, getAllUsers, getUserById, re
 import type { IUserUpdateDto } from "../../Domain/Interfaces/IUser.interface";
 
 class UserService {
-  
   async getUsers(req:Request, res:Response): Promise<User[]|any> {
     try{
       const users = await getAllUsers();
@@ -52,10 +51,18 @@ class UserService {
             role: role||'user',
         };
         const user = await registerUser(userData);
-        return res.status(200).json({
+        
+        if(user === 'Usuarname ya utilizado'){
+          return res.status(409).json({
+            ok: true,
+            message: user,
+          });
+        }else{
+          return res.status(200).json({
             ok: true,
             user: user,
-        });
+          });
+        }        
     }catch(error){
         return res.status(500).json({
             ok: false,

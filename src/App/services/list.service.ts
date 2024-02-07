@@ -4,10 +4,8 @@ import type { IListCreateDto, IListUpdateDto } from "../../Domain/Interfaces/ILi
 import { createList, deleteList, getAllListsByUser, updateList } from "../data/list.data";
 
 class ListService {
-  
   async getListsByBoard(req:Request, res:Response): Promise<List[] | any> {
     try{
-      // const userId = req.userId;
       const boardId = req.params["id"];
       const lists = await getAllListsByUser(boardId);
       return res.status(200).json({

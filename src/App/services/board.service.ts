@@ -4,7 +4,6 @@ import { createBoard, deleteBoard, getAllBoardByUser, updateBoard } from "../dat
 import type { IBoardUpdateDto } from "../../Domain/Interfaces/IBoard.interface";
 
 class BoardService {
-  
   async getBoardsById(req:Request, res:Response): Promise<Board|any> {
     try{
       const userId = req.userId;

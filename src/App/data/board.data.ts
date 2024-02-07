@@ -21,8 +21,6 @@ export async function deleteBoard(id:string):Promise<Board>{
     return result.rows[0];
 }
 
-
-
 export async function updateBoard(data:IBoardUpdateDto):Promise<Board>{
   const consult = `
     UPDATE Boards

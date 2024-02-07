@@ -8,13 +8,18 @@ const jwtSecret = process.env["JWTSECRET"];
 
 
 
-export async function registerUser(data: UserData):Promise<User>{
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    const _query = "INSERT INTO users(name,username,password,role) VALUES($1,$2,$3,$4) RETURNING *"
-    const queryParams = [ data.name,data.username,hashedPassword,data.role];
-    
-    const result = await query(_query,queryParams);
-    return result.rows[0];
+export async function registerUser(data: UserData):Promise<User|string>{
+    const existingUser = await getUserByName(data.username);
+    if (existingUser) {
+        return "Usuarname ya utilizado";
+    }else{ 
+      const hashedPassword = await bcrypt.hash(data.password, 10);
+      const _query = "INSERT INTO users(name,username,password,role) VALUES($1,$2,$3,$4) RETURNING *"
+      const queryParams = [ data.name,data.username,hashedPassword,data.role];
+      
+      const result = await query(_query,queryParams);
+      return result.rows[0];
+    }
 }
 
 export async function UpdateUsernameById(id:string,data:IUserUpdateDto): Promise<User>{
@@ -60,8 +65,6 @@ export async function deleteUsername(userId:string):Promise<User>{
 export async function Login(data:IUserLoginDto){
     const userFromBb = await getUserByName(data.username);
 
-    // console.log("Aqui ",userFromBb);
-    
     if(userFromBb === undefined){
       return {
         ok: false,

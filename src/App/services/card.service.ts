@@ -7,7 +7,6 @@ class CardService {
   
   async getAllCardByList(req:Request, res:Response): Promise<Card[] | any> {
     try{
-      // const userId = req.userId;
       const listId = req.params["id"];
       const cards = await getAllCardsByList(listId);
       return res.status(200).json({
@@ -25,13 +24,16 @@ class CardService {
 
   async createCard(req:Request, res:Response) {
     try{
-        const card_title = req.body.list_name;
+        const card_title = req.body.card_title;
         const list_id = Number(req.params["id"]); 
 
         const cardData: CardData = {
             card_title:card_title,
             list_Id:list_id,
         };
+
+        console.log(cardData);
+
         const card = await createCard(cardData);
         return res.status(200).json({
             ok: true,
