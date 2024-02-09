@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 import { query } from "../../db";
 import type { User, UserData } from "../../Domain/models/user.model";
 import type { IUserLoginDto, IUserUpdateDto } from "../../Domain/Interfaces/IUser.interface";
