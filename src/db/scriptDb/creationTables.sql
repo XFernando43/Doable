@@ -32,41 +32,12 @@ CREATE TABLE Cards (
     list_Id INT REFERENCES LISTS(list_Id)
 );
 
-
-
-
-
-
-
-
-
 DROP TABLE Users
 DROP TABLE Boards
 DROP TABLE LISTS
 DROP TABLE Cards
 
-
-
-
-
-
-
-
-
-
 Select* from Boards where user_id = 7
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- Datos de prueba para la tabla Users
 INSERT INTO Users (name, username, password,rol) VALUES
@@ -89,8 +60,6 @@ INSERT INTO LISTS (list_name,board_id) VALUES
 Select * from lists
 Select * from lists where list_Id = 1
 
-
-
 -- Datos de prueba para la tabla Cards
 INSERT INTO Cards (card_title, list_Id) VALUES
 ('Tarea 1', 1),
@@ -99,7 +68,6 @@ INSERT INTO Cards (card_title, list_Id) VALUES
 ('Tarea 4', 3),
 ('Tarea 5', 4),
 ('Tarea 6', 5);
-
 
 select* from cards where list_id = 1
 
@@ -111,16 +79,9 @@ Select* from Boards where user_id = 6
 update users set role = 'admin'
 where user_id = 6
 
-
-
-
 UPDATE lists
     SET list_name = 'daskjdbnk',
         orderList = 1
     WHERE list_Id = 14
     RETURNING *;
-
-
-
-
 

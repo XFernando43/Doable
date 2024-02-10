@@ -10,6 +10,13 @@ boardRouter.get(
   authorize("admin","user"),
   Board_Controller.getAllBoardForUser
 );
+
+boardRouter.get(
+  "/getBoard/:id",
+  authenticateHandler,
+  authorize("admin","user"),
+  Board_Controller.getBoardById
+);
   
 boardRouter.post(
     "",

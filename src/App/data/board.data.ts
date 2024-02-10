@@ -15,6 +15,12 @@ export async function getAllBoardByUser(id:string):Promise<Board[]>{
     return result.rows;
 }
 
+export async function getBoardByID(id:string):Promise<Board|any>{
+    const _query = `Select* from Boards where board_id = ${id}`;
+    const result = await query(_query);
+    return result.rows;
+}
+
 export async function deleteBoard(id:string):Promise<Board>{
   const consult = `Delete from Boards where board_id = ${id} RETURNING *;`;
     const result = await query(consult);

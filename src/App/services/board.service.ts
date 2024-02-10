@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import type { Board, BoardData } from "../../Domain/models/board.model";
-import { createBoard, deleteBoard, getAllBoardByUser, updateBoard } from "../data/board.data";
+import { createBoard, deleteBoard, getAllBoardByUser, getBoardByID, updateBoard } from "../data/board.data";
 import type { IBoardUpdateDto } from "../../Domain/Interfaces/IBoard.interface";
 
 class BoardService {
@@ -11,6 +11,23 @@ class BoardService {
       return res.status(200).json({
           ok:true,
           boards:board
+      });
+    }catch(error){
+      return res.status(500).json({
+          ok: false,
+          msg: "Error de Servidor",
+          data: error,
+      });
+    }
+  }
+
+  async getBoardById(req:Request, res:Response): Promise<Board|any> {
+    try{
+      const boardId = req.params["id"];
+      const board = await getBoardByID(boardId);
+      return res.status(200).json({
+          ok:true,
+          board:board
       });
     }catch(error){
       return res.status(500).json({

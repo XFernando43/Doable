@@ -5,6 +5,10 @@ export class BoardController{
         return await Board_Service.getBoardsById(req, res);
     }
 
+    async getBoardById(req:Request, res:Response){
+        return await Board_Service.getBoardById(req, res);
+    }
+
     async updateBoard(req:Request, res:Response){
         return await Board_Service.updateBoard(req,res);
     }
