@@ -54,7 +54,7 @@ class UserService {
         
         if(user === 'Usuarname ya utilizado'){
           return res.status(409).json({
-            ok: true,
+            ok: false,
             message: user,
           });
         }else{
